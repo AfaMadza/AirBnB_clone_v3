@@ -19,8 +19,8 @@ def index():
     resp.status_code = 200
     return resp
 
-@app_views.route('/api/v1/stats')
-def count_objects():
+@app_views.route('/stats')
+def stats():
     """
     Retrieves number of objects by type
     """
@@ -40,6 +40,6 @@ def count_objects():
         "users": users
     }
 
-    resp = jasonify(data)
+    resp = jsonify(data)
     resp.status_code = 200
     return resp
