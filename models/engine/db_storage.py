@@ -38,7 +38,7 @@ class DBStorage:
         '''
         db_dict = {}
 
-        if cls != "":
+        if cls is not None:
             objs = self.__session.query(models.classes[cls]).all()
             for obj in objs:
                 key = "{}.{}".format(obj.__class__.__name__, obj.id)
@@ -89,23 +89,15 @@ class DBStorage:
         '''
         self.__session.close()
 
-
     def get(self, cls, id):
         '''
         Return object based on class name and id or None if not found
         '''
-        db_dict = {}
-
         if cls != "":
-            objs = self.__session.query(models.classes[cls]).all()
-            for obj in objs:
-                if obj.id == id:
-                    key = "{}.{}".format(obj.__class__.__name__, obj.id)
-                    db_dict[key] = obj
-            if len(db_dict) > 0:
-                return db_dict
-            else:
-                return None
+            objs = self.__session.query(
+                models.classes[cls]).filter_by(
+                id=id).first()
+            return objs
         else:
             return None
 
@@ -113,20 +105,10 @@ class DBStorage:
         '''
         Counts the number of objects in storage
         '''
-        db_dict = {}
-        if cls != "":
-            objs = self.__session.query(models.classes[cls]).all()
-            for obj in objs:
-                count += 1
-            if count > 0:
-                return count
+        count = 0
+        if cls is None:
+            objs = models.storage.all().values()
+            return len(objs)
         else:
-            for k, v in models.classes.items():
-                if k != "BaseModel":
-                    objs = self.__session.query(v).all()
-                    if len(objs) > 0:
-                        for obj in objs:
-                            key = "{}.{}".format(obj.__class__.__name__,
-                                                 obj.id)
-                            db_dict[key] = obj
-            return len(db_dict)
+            objs = models.storage.all(cls).values()
+            return len(objs)
