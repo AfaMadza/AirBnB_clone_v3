@@ -10,7 +10,9 @@ def index():
     """
     Returns a JSON representation of status
     """
-    data = { "status": "OK" }
+    data = {
+        "status": "OK"
+    }
     resp = jsonify(data)
     resp.status_code = 200
     return resp
