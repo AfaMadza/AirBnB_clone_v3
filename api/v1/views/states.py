@@ -8,12 +8,13 @@ from models import storage
 from api.v1.app import not_found
 
 
-@app_views.route('/states', methods=['GET'])
+@app_views.route('/states/', methods=['GET'])
 def get_states():
     """
     Retrieves list of all State objects
     """
-    return (jsonify(storage.get("State")))
+    if request.method == 'GET':
+        return jsonify([obj.to_dict() for obj in storage.all("State").values()])
 
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
 def update_state(state_id):
