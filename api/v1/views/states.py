@@ -8,18 +8,27 @@ from models import storage
 from api.v1.app import not_found
 
 
-@app_views.route('/states/', methods=['GET'])
+@app_views.route('/states/', methods=['GET', 'POST'])
 def get_states():
     """
     Retrieves list of all State objects
     """
     if request.method == 'GET':
         return jsonify([obj.to_dict() for obj in storage.all("State").values()])
-
+    if request.method == 'POST':
+        if not request.json:
+            abort(400, 'Not a JSON')
+        if 'name' not in request.json:
+            abort(400, 'Missing name')
+        data = request.get_json()
+        data.save()
+        data.to_dict()
+        return make_response(jsonify(data), 200)
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
 def update_state(state_id):
     """
-    Retrieves state by state id
+    Performs certain functions on a state instance
+    if the action cannot be performed, a 404 error is displayed
     """
     state = storage.get("State", state_id)
     if state is None:
@@ -28,14 +37,18 @@ def update_state(state_id):
     if request.method == 'GET':
         data = state.to_dict()
         return make_response(jsonify(data), 200)
+        #try:
+            #return jsonify([obj.to_dict() for obj in storage.all("State").values(state_id)])
+       # except:
+        #    abort(404)
 
     elif request.method == 'DELETE':
         data = {}
-        state = get_state(state_id)
+        # state = storage.get("State", state_id)
         storage.delete(state)
         storage.save()
         resp = jsonify(data)
-        resp.staus_code = 200
+        resp.status_code = 200
         return resp
 
     elif request.method == 'PUT':
