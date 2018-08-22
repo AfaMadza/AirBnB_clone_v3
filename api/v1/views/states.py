@@ -6,6 +6,7 @@ from api.v1.views import app_views
 from flask import make_response, jsonify, request, abort
 from models import storage
 from api.v1.app import not_found
+from models import State
 
 
 @app_views.route('/states/', methods=['GET', 'POST'])
@@ -14,16 +15,19 @@ def get_states():
     Retrieves list of all State objects
     """
     if request.method == 'GET':
-        return jsonify([obj.to_dict() for obj in storage.all("State").values()])
+        return jsonify([obj.to_dict()
+                        for obj in storage.all("State").values()])
     if request.method == 'POST':
         if not request.json:
             abort(400, 'Not a JSON')
         if 'name' not in request.json:
             abort(400, 'Missing name')
-        data = request.get_json()
-        data.save()
-        data.to_dict()
-        return make_response(jsonify(data), 200)
+        data = request.get_json().get('name')
+        new_state = State(name=data)
+        new_state.save()
+        return make_response(jsonify(new_state.to_dict()), 201)
+
+
 @app_views.route('/states/<state_id>', methods=['GET', 'DELETE', 'PUT'])
 def update_state(state_id):
     """
@@ -37,8 +41,8 @@ def update_state(state_id):
     if request.method == 'GET':
         data = state.to_dict()
         return make_response(jsonify(data), 200)
-        #try:
-            #return jsonify([obj.to_dict() for obj in storage.all("State").values(state_id)])
+        # try:
+        # return jsonify([obj.to_dict() for obj in storage.all("State").values(state_id)])
        # except:
         #    abort(404)
 
