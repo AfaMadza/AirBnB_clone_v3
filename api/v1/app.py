@@ -8,6 +8,7 @@ from models import storage
 from flask import Flask, jsonify
 from api.v1.views import app_views
 from flask import make_response
+import os
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -27,4 +28,6 @@ def not_found(error):
     return make_response(jsonify({"error": "Not found"}), 404)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, threaded=True)
+    hosts = os.getenv('HBNB_API_HOST', default='0.0.0.0')
+    ports = os.getenv('HBNB_API_PORT', default='5000')
+    app.run(host=hosts, port=int(ports), threaded=True)
