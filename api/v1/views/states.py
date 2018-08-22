@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module contains a new view for State
+This module contains a new view for State instance
 """
 from api.v1.views import app_views
 from flask import make_response, jsonify, request, abort
