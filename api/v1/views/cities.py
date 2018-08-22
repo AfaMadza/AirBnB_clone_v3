@@ -6,9 +6,8 @@ from api.v1.views import app_views
 from flask import make_response, jsonify, request, abort
 from models import storage
 from api.v1.app import not_found
-from models import State
 from models import City
-
+from models import State
 
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
 def get_cities(state_id):
@@ -20,7 +19,7 @@ def get_cities(state_id):
         abort(404)
     if request.method == 'GET':
         return jsonify([obj.to_dict() for obj in
-                        storage.all("City") if obj.state_id == state_id])
+                        storage.all("City").values() if obj.state_id == state_id])
     if request.method == 'POST':
         if not request.json:
             abort(400, 'Not a JSON')
@@ -33,7 +32,7 @@ def get_cities(state_id):
 
 
 @app_views.route('/cities/<city_id>', methods=['GET', 'DELETE', 'PUT'])
-def update_state(city_id):
+def update_city(city_id):
     """
     Performs certain functions on a city instance
     if the action cannot be performed, a 404 error is displayed
