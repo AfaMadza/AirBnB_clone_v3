@@ -41,14 +41,9 @@ def update_state(state_id):
     if request.method == 'GET':
         data = state.to_dict()
         return make_response(jsonify(data), 200)
-        # try:
-        # return jsonify([obj.to_dict() for obj in storage.all("State").values(state_id)])
-       # except:
-        #    abort(404)
 
     elif request.method == 'DELETE':
         data = {}
-        # state = storage.get("State", state_id)
         storage.delete(state)
         storage.save()
         resp = jsonify(data)
