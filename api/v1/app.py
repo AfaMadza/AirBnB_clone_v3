@@ -7,7 +7,6 @@ script starts Flask web app
 from models import storage
 from flask import Flask, jsonify
 from api.v1.views import app_views
-from flask import make_response
 import os
 
 
@@ -26,10 +25,10 @@ def tear_down(self):
 @app.errorhandler(404)
 def not_found(error):
     """ 404 Not found response"""
-    return make_response(jsonify({"error": "Not found"}), 404)
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
     hosts = os.getenv('HBNB_API_HOST', default='0.0.0.0')
-    ports = os.getenv('HBNB_API_PORT', default='5000')
+    ports = os.getenv('HBNB_API_PORT', default=5000)
     app.run(host=hosts, port=int(ports), threaded=True)
