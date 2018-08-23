@@ -109,23 +109,3 @@ class DBStorage:
         else:
             objs = models.storage.all(cls).values()
             return len(objs)
-
-
-"""    def get(self, cls, id):
-        '''
-        Return object based on class name and id or None if not found
-        '''
-        objs = models.storage.all(cls)
-        for k, v in objs.items():
-            key = cls + '.' + id
-            if k == key:
-                return v
-        return None
-
-    def count(self, cls=None):
-        '''
-        Counts the number of objects in storage
-        '''
-        objs = models.storage.all(cls)
-        return len(objs)
-"""
