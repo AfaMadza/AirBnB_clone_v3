@@ -10,6 +10,7 @@ from api.v1.views import app_views
 from flask import make_response
 import os
 
+
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
@@ -26,6 +27,7 @@ def tear_down(self):
 def not_found(error):
     """ 404 Not found response"""
     return make_response(jsonify({"error": "Not found"}), 404)
+
 
 if __name__ == "__main__":
     hosts = os.getenv('HBNB_API_HOST', default='0.0.0.0')
