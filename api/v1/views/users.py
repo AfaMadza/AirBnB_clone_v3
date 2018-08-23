@@ -8,6 +8,7 @@ from models import storage
 from api.v1.app import not_found
 from models import User
 
+
 @app_views.route('/users', methods=['GET', 'POST'])
 def get_users():
     """

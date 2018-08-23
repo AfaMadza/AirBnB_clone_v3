@@ -19,8 +19,8 @@ def get_cities(state_id):
     if state is None:
         abort(404)
     if request.method == 'GET':
-        return jsonify([obj.to_dict() for obj in
-                        storage.all("City").values() if obj.state_id == state_id])
+        return jsonify([obj.to_dict() for obj in storage.all("City").values()
+                        if obj.state_id == state_id])
     if request.method == 'POST':
         if not request.json:
             abort(400, 'Not a JSON')

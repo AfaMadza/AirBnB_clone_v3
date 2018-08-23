@@ -19,6 +19,7 @@ def index():
     resp.status_code = 200
     return resp
 
+
 @app_views.route('/stats')
 def stats():
     """

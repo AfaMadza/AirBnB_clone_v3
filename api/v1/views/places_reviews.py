@@ -8,6 +8,7 @@ from models import storage
 from api.v1.app import not_found
 from models import Review
 
+
 @app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'])
 def get_place_rev(place_id):
     """
@@ -45,7 +46,6 @@ def update_review(review_id):
     Performs certain functions on a review instance
     if the action cannot be performed, a 404 error is displayed
     """
-    
     review = storage.get("Review", review_id)
     if review is None:
         abort(404)
@@ -66,7 +66,8 @@ def update_review(review_id):
         if not request.json:
             abort(400, 'Not a JSON')
         for k, v in request.json.items():
-            if k not in ['updated_at', 'created_at', 'id', 'user_id', 'place_id']:
+            if k not in ['updated_at', 'created_at', 'id',
+                         'user_id', 'place_id']:
                 setattr(review, k, v)
         review.save()
         data = city.to_dict()
