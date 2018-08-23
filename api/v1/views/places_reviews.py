@@ -9,19 +9,19 @@ from api.v1.app import not_found
 from models import Review
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET', 'POST'])
-def get_cities(place_id):
+def get_place_rev(place_id):
     """
     Retrieves list of all Review objects and creates an instance as well
     """
     place = storage.get("Place", place_id)
-    
+
     if place is None:
         abort(404)
-    
+
     if request.method == 'GET':
-        return jsonify([obj.to_dict() for obj in
-                        storage.all("Review").values() if obj.place_id == place_id])
-    
+        return jsonify([obj.to_dict() for obj in storage.all("Review").values()
+                        if obj.place_id == place_id])
+
     if request.method == 'POST':
         if not request.json:
             abort(400, 'Not a JSON')

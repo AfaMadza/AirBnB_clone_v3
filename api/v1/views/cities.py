@@ -9,6 +9,7 @@ from api.v1.app import not_found
 from models import State
 from models import City
 
+
 @app_views.route('/states/<state_id>/cities', methods=['GET', 'POST'])
 def get_cities(state_id):
     """
