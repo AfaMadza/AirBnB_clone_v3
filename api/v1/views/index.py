@@ -8,7 +8,7 @@ from models import storage
 
 
 @app_views.route('/status')
-def index():
+def status():
     """
     Returns a JSON representation of status
     """
