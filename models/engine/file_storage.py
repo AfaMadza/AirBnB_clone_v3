@@ -83,16 +83,10 @@ class FileStorage:
         '''
             Return object based on class name and id or None if not found
         '''
-        new_dict = {}
-        if cls is None:
-            return None
-        if cls != "":
-            for k, v in self.__objects.items():
-                if cls == k.split(".")[0] and id == k.split(".")[1]:
-                    new_dict[k] = v
-                    return new_dict
-                else:
-                    return None
+        for k, v in self.__objects.items():
+            if cls in k and str(id) in k:
+                return v
+        return None
 
     def count(self, cls=None):
         """
