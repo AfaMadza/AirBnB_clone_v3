@@ -94,8 +94,9 @@ class DBStorage:
         Return object based on class name and id or None if not found
         '''
         objs = None
-        objs = self.__session.query(models.classes[cls]).filter_by\
-               (id=str(id)).first()
+        objs = self.__session.query(
+            models.classes[cls]).filter_by(
+            id=str(id)).first()
         return objs
 
     def count(self, cls=None):
