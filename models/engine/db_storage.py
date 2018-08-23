@@ -38,7 +38,7 @@ class DBStorage:
         '''
         db_dict = {}
 
-        if cls is not None:
+        if cls is not None or cls != "":
             objs = self.__session.query(models.classes[cls]).all()
             for obj in objs:
                 key = "{}.{}".format(obj.__class__.__name__, obj.id)
@@ -97,7 +97,7 @@ class DBStorage:
             objs = self.__session.query(
                 models.classes[cls]).filter_by(
                 id=id).first()
-            return objs
+            return str(objs)
         else:
             return None
 
