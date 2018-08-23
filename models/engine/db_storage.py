@@ -96,8 +96,8 @@ class DBStorage:
         if cls != "":
             objs = self.__session.query(
                 models.classes[cls]).filter_by(
-                id=id).first()
-            return str(objs)
+                    id=str(id)).first()
+            return objs
         else:
             return None
 
