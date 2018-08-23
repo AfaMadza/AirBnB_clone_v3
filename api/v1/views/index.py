@@ -3,7 +3,7 @@
 This module contains a route that returns the status of an object
 """
 from api.v1.views import app_views
-from flask import Response, jsonify
+from flask import jsonify
 from models import storage
 
 
@@ -12,12 +12,7 @@ def index():
     """
     Returns a JSON representation of status
     """
-    data = {
-        "status": "OK"
-    }
-    resp = jsonify(data)
-    resp.status_code = 200
-    return resp
+    return jsonify({"status": "OK"})
 
 
 @app_views.route('/stats')
@@ -42,5 +37,4 @@ def stats():
     }
 
     resp = jsonify(data)
-    resp.status_code = 200
     return resp
