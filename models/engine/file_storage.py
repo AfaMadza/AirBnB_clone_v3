@@ -83,8 +83,10 @@ class FileStorage:
         '''
             Return object based on class name and id or None if not found
         '''
-        for k, v in self.__objects.items():
-            if cls in k and str(id) in k:
+        objs = models.storage.all(cls)
+        for k, v in objs:
+            key = cls + '.' + id
+            if k == key:
                 return v
         return None
 
@@ -94,11 +96,5 @@ class FileStorage:
         Returns: number of objects in storage matching given class name
         otherwise returns the counts of all objects in storage
         """
-        new_dict = {}
-        if cls is None:
-            return len(self.__objects)
-        else:
-            for k, v in self.__objects.items():
-                if cls == k.split(".")[0]:
-                    new_dict[k] = v
-            return len(new_dict)
+        objs = self.all(cls)
+        return len(objs)
