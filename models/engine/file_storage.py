@@ -84,7 +84,7 @@ class FileStorage:
             Return object based on class name and id or None if not found
         '''
         objs = models.storage.all(cls)
-        for k, v in objs:
+        for k, v in objs.items():
             key = cls + '.' + id
             if k == key:
                 return v
