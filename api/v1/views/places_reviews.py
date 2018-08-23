@@ -5,7 +5,6 @@ This module contains a new view for Review instance
 from api.v1.views import app_views
 from flask import make_response, jsonify, request, abort
 from models import storage
-from api.v1.app import page_not_found
 from models import Review
 
 
