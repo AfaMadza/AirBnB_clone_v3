@@ -32,7 +32,7 @@ def get_place_rev(place_id):
         data = request.get_json().get('text')
         user_id = request.get_json().get('user_id')
         user = storage.get('User', user_id)
-        if user is  None:
+        if user is None:
             abort(404)
         new_review = Review(user_id=user_id, text=data, place_id=place_id)
         new_review.save()
