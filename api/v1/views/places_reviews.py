@@ -30,11 +30,11 @@ def get_place_rev(place_id):
         if 'text' not in request.json:
             abort(400, 'Missing text')
         data = request.get_json().get('text')
-        id = request.get_json().get('user_id')
+        user_id = request.get_json().get('user_id')
         user = storage.get('User', user_id)
-        if user is not None:
+        if user is  None:
             abort(404)
-        new_review = City(user_id=user_id, text=data, place_id=place_id)
+        new_review = Review(user_id=user_id, text=data, place_id=place_id)
         new_review.save()
         return make_response(jsonify(new_review.to_dict()), 201)
 
@@ -69,5 +69,5 @@ def update_review(review_id):
                          'user_id', 'place_id']:
                 setattr(review, k, v)
         review.save()
-        data = city.to_dict()
+        data = review.to_dict()
         return make_response(jsonify(data), 200)
